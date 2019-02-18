@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>User page {{ user.first_name }}</h1>
+    <h1>User page {{ user.first_name }}  {{user.last_name}}</h1>
+    <h2>User passes {{user.password}}  Match_passes:{{user.match_pass}}</h2>
+    <h3>User phone: {{user.phone}}</h3>
 </body>
 </html>

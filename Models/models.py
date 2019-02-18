@@ -11,7 +11,7 @@ class User:
 
     @property
     def phone(self):
-        return self.__password
+        return self.__phone
 
     @phone.setter
     def phone(self, phone):
