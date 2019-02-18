@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, request
 from Views import views
 
 
@@ -15,6 +15,18 @@ def show_food():
 @app.route('/items/toys/')
 def show_toys():
     return  views.get_toys_queryset()
+
+
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        return views.login(request.form)
+    else:
+        return views.show_login()
+
+@app.route('/users/')
+def show_users():
+    return views.show_users()
 
 
 if __name__ == '__main__':

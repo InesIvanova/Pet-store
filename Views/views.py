@@ -13,6 +13,26 @@ CAGES_PATH = f'{ABSOLUTE_PATH}/DB/Cages_db/cages.txt'
 def index():
     return render_template('index.html')
 
+def show_login():
+    return render_template('login.html')
+
+def login(form):
+    first_name = form['first_name']
+    last_name = form['last_name']
+    password = form['password']
+
+    users = get_users_Queryset()
+    print(users[0].first_name)
+
+    is_user = list(filter(lambda user: user.first_name == first_name and user.last_name == last_name and user.password == password, users))
+
+    if is_user:
+        return render_template('index.html', user=is_user[0])
+    return render_template('error.html')
+
+
+
+
 def save_users(users):
     with open(USERS_PATH, 'wb') as file:
         pickle.dump(users, file)
@@ -27,7 +47,12 @@ def create_user(user_data):
 def get_users_Queryset():
     with open(USERS_PATH, 'rb') as file:
         users = pickle.load(file)
-        return users
+    return users
+
+def show_users():
+    users = get_users_Queryset()
+    return render_template('users.html', users=users)
+
 
 def create_food(food_data):
     try:
