@@ -1,11 +1,17 @@
 from Models import models
 import pickle
+from flask import render_template
 
-FOOD_PATH = '../DB/Food_db/food.txt'
-USERS_PATH = '../DB/Users_db/users.txt'
-ANIMALS_PATH = '../DB/Animals_db/animals.txt'
-TOYS_PATH = '../DB/Toys_db/toys.txt'
-CAGES_PATH = '../DB/Cages_db/cages.txt'
+ABSOLUTE_PATH = 'C://Users/Ines/PycharmProjects/Mini-Lab-Pet_store_site'
+
+FOOD_PATH = f'{ABSOLUTE_PATH}/DB/Food_db/food.txt'
+USERS_PATH = f'{ABSOLUTE_PATH}/DB/Users_db/users.txt'
+ANIMALS_PATH = f'{ABSOLUTE_PATH}/DB/Animals_db/animals.txt'
+TOYS_PATH = f'{ABSOLUTE_PATH}/DB/Toys_db/toys.txt'
+CAGES_PATH = f'{ABSOLUTE_PATH}/DB/Cages_db/cages.txt'
+
+def index():
+    return render_template('index.html')
 
 def save_users(users):
     with open(USERS_PATH, 'wb') as file:
@@ -37,8 +43,9 @@ def save_food(food_list):
 
 def get_food_queryset():
     with open(FOOD_PATH, 'rb') as file:
-        food = pickle.load(file)
-        return food
+        food_list = pickle.load(file)
+    return render_template('items.html', items=food_list, is_toy=False)
+
 
 def create_toy(toy_data):
     try:
@@ -55,7 +62,7 @@ def save_toys(toys_list):
 def get_toys_queryset():
     with open(TOYS_PATH, 'rb') as file:
         toys = pickle.load(file)
-        return toys
+    return render_template('items.html', items=toys, is_toy=True)
 
 
 def create_cage(cage_data):
@@ -98,18 +105,3 @@ def get_animals_queryset():
         return animals
 
 
-
-if __name__ == '__main__':
-    food_list = []
-    for _ in range(3):
-        toy = ['cat', f'{_}', 'jujo', 5, 5.5]
-        toy = create_animal(toy)
-        food_list.append(toy)
-
-    save_animals(food_list)
-    toys = get_animals_queryset()
-    a=5
-    animals = get_animals_queryset()
-    a =5
-
-    #call other functions to get data from files
