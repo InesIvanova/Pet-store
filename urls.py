@@ -21,8 +21,20 @@ def show_toys():
 def login():
     if request.method == 'POST':
         return views.login(request.form)
-    else:
-        return views.show_login()
+    return views.show_login()
+
+
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        return views.register(request.form)
+    return views.show_register()
+
+
+@app.route('/users/<username>')
+def get_user(username):
+    return views.show_user(username)
+
 
 @app.route('/users/')
 def show_users():

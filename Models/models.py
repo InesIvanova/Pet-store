@@ -15,7 +15,8 @@ class User:
 
     @phone.setter
     def phone(self, phone):
-        if not len(phone) == 13:
+        print(len(phone))
+        if not len(phone) == 14:
             raise Exception('Phone must have 14 characters')
 
         if not (phone[0:4] == '+359'):

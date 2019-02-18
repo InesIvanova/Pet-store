@@ -30,8 +30,33 @@ def login(form):
         return render_template('index.html', user=is_user[0])
     return render_template('error.html')
 
+def show_register():
+    return render_template('register.html')
+
+def register(form):
+    fields = [form['first_name'], form['last_name'], form['password'], form['match_pass'], form['phone']]
+    if not len(fields) == 5:
+        return render_template('register.html', error='All fields are required!')
+    if not form['password'] == form['match_pass']:
+        return render_template('register.html', error='Passwords do not match')
+
+    users = get_users_Queryset()
+    try:
+        user = models.User(first_name=fields[0], last_name=fields[1], password=fields[2], match_pass=fields[3], phone=fields[4])
+        users.append(user)
+        save_users(users)
+        return render_template('success.html')
+    except Exception as exception:
+        return render_template('error.html', error=exception)
 
 
+
+def show_user(username):
+    user = list(filter(lambda user: user.first_name == username, get_users_Queryset()))
+
+    if user:
+        return render_template('user.html', user=user[0])
+    return render_template('error.html')
 
 def save_users(users):
     with open(USERS_PATH, 'wb') as file:
